@@ -469,18 +469,33 @@
         }
 
         /* Profile Image */
-.profile-img {
-    width: 250px;
-    height: 250px;
-    margin: auto;
-    overflow: hidden;
-    border-radius: 10px; /* square with slightly rounded corners */
+        .profile-img {
+    width: 300px;
+    height: 300px;
+    position: relative;
+    border-radius: 25px;
+    padding: 8px;
+    background: linear-gradient(135deg,#00d4ff,#0072ff,#8a2be2);
+    box-shadow: 0 0 40px rgba(0,212,255,0.5);
+    animation: float 3s ease-in-out infinite;
 }
 
 .profile-img img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    border-radius:20px;
+    background:#08142d;
+}
+
+
+@keyframes float {
+    0%,100%{
+        transform:translateY(0);
+    }
+    50%{
+        transform:translateY(-15px);
+    }
 }
         /* Section Styles */
         section {
