@@ -116,3 +116,4 @@ All statistics, dates, grades, and credentials displayed across this portfolio a
 - **TCS CodeVita Season 13**: Global Rank 16,434
 - **Internship**: Thiranx Data Analytics Intern (June 06 – July 05, 2026)
 - **Official Resume PDF**: Downloadable at `/resume.pdf`
+

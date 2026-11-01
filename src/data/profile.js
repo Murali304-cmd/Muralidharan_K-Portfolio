@@ -38,3 +38,4 @@ export const profile = {
     "Pursues continuous self-directed learning through online coding platforms and technical communities."
   ]
 };
+

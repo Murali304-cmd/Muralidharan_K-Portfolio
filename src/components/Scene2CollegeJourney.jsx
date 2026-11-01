@@ -334,3 +334,4 @@ export default function Scene2CollegeJourney() {
     </section>
   );
 }
+

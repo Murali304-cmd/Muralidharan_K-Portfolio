@@ -213,3 +213,4 @@ export default function CommandPalette({ isOpen, onClose, toggleTheme, theme }) 
     </div>
   );
 }
+

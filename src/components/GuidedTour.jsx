@@ -174,3 +174,4 @@ export default function GuidedTour({ isActive, onClose }) {
     </motion.div>
   );
 }
+

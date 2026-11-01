@@ -411,3 +411,4 @@ export default function Scene4Projects() {
     </section>
   );
 }
+

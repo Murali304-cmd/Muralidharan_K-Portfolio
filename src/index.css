@@ -2,85 +2,89 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --paper: #f4f2ee;
+  --card: #ffffff;
+  --ink: #0d0d0d;
+  --ink-2: #2a2a2a;
+  --mute: #77756f;
+  --faint: #a9a6a0;
+  --line: rgba(13, 13, 13, 0.08);
+  --line-bold: rgba(13, 13, 13, 0.16);
+  --soft: #e9e6e0;
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
 @layer base {
   html {
     scroll-behavior: smooth;
+    background-color: var(--paper);
+    color: var(--ink);
     font-feature-settings: "cv02", "cv03", "cv04", "cv11";
   }
 
   body {
+    background-color: var(--paper);
+    color: var(--ink);
     overflow-x: hidden;
   }
 
   ::selection {
-    background-color: #6366f1;
-    color: #ffffff;
+    background-color: var(--ink);
+    color: var(--paper);
   }
 }
 
-/* Custom subtle dot grid */
-.dot-grid-pattern {
-  background-image: radial-gradient(rgba(99, 102, 241, 0.12) 1px, transparent 1px);
-  background-size: 24px 24px;
+/* Serif italic accent word */
+.font-serif-italic {
+  font-family: "Instrument Serif", "Georgia", serif;
+  font-style: italic;
+  font-weight: 400;
 }
 
-.dark .dot-grid-pattern {
-  background-image: radial-gradient(rgba(99, 102, 241, 0.18) 1px, transparent 1px);
-  background-size: 24px 24px;
-}
-
-/* Pipeline Progress Rail */
-.pipeline-rail-track {
+/* Ink-flood hover effect for certifications */
+.ink-flood-row {
   position: relative;
+  transition: color 0.35s var(--ease);
+  overflow: hidden;
 }
 
-.pipeline-rail-fill {
-  background: linear-gradient(180deg, #6366f1 0%, #06b6d4 100%);
-  transition: height 0.15s ease-out;
+.ink-flood-row::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-color: var(--ink);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.4s var(--ease);
+  z-index: 0;
 }
 
-/* Custom sleek scrollbar */
-::-webkit-scrollbar {
-  width: 8px;
+.ink-flood-row:hover::before {
+  transform: scaleX(1);
 }
 
-::-webkit-scrollbar-track {
-  background: transparent;
+.ink-flood-row:hover {
+  color: #ffffff;
 }
 
-::-webkit-scrollbar-thumb {
-  background: #cbd5e1;
-  border-radius: 9999px;
+.ink-flood-row > * {
+  position: relative;
+  z-index: 1;
 }
 
-.dark ::-webkit-scrollbar-thumb {
-  background: #334155;
+/* Letter hop animation for contact heading */
+.letter-hop {
+  display: inline-block;
+  transition: transform 0.25s var(--ease), color 0.25s var(--ease);
 }
 
-::-webkit-scrollbar-thumb:hover {
-  background: #94a3b8;
+.letter-hop:hover {
+  transform: translateY(-8px);
+  color: var(--mute);
 }
 
-.dark ::-webkit-scrollbar-thumb:hover {
-  background: #475569;
-}
-
-/* Reduced motion preference */
-@media (prefers-reduced-motion: reduce) {
-  *,
-  ::before,
-  ::after {
-    animation-delay: -1ms !important;
-    animation-duration: 1ms !important;
-    animation-iteration-count: 1 !important;
-    background-attachment: initial !important;
-    scroll-behavior: auto !important;
-    transition-delay: 0s !important;
-    transition-duration: 0s !important;
-  }
-}
-
-/* 3D Envelope perspective */
+/* 3D Perspective & Pendulum animations */
 .perspective-1000 {
   perspective: 1000px;
 }
@@ -91,4 +95,27 @@
 
 .backface-hidden {
   backface-visibility: hidden;
+}
+
+/* Custom smooth scrollbar */
+::-webkit-scrollbar {
+  width: 7px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--paper);
+}
+
+::-webkit-scrollbar-thumb {
+  background: #c8c5be;
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--mute);
+}
+
+/* Expanding horizontal accordion panel transitions */
+.accordion-panel {
+  transition: flex 0.6s var(--ease), max-width 0.6s var(--ease);
 }

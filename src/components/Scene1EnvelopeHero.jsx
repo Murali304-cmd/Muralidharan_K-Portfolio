@@ -320,3 +320,4 @@ export default function Scene1EnvelopeHero() {
     </section>
   );
 }
+
