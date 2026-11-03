@@ -1,44 +1,42 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Database, BarChart2, Cpu, Terminal } from 'lucide-react';
+import { Database, BarChart2 } from 'lucide-react';
 import { sound } from '../hooks/useSoundHaptics';
 
 export default function Hero() {
   const [rotateX, setRotateX] = useState(0);
   const [rotateY, setRotateY] = useState(0);
+
+  const canvasRef = useRef(null);
   const videoRef = useRef(null);
+  const audioRef = useRef(null);
   const containerRef = useRef(null);
 
   useEffect(() => {
     const video = videoRef.current;
-    if (!video) return;
+    const audio = audioRef.current;
+    const canvas = canvasRef.current;
+    if (!video || !canvas) return;
 
+    // Start video playback
+    video.muted = true;
     video.loop = true;
     video.playsInline = true;
+    video.play().catch(() => {});
 
-    // 1. Immediately start playing video so the avatar is actively moving & speaking
-    video.muted = true;
-    const playPromise = video.play();
-
-    if (playPromise !== undefined) {
-      playPromise
-        .then(() => {
-          // Video is playing! Attempt unmuting voice
-          video.muted = false;
-          video.volume = 1.0;
-        })
-        .catch(() => {
-          video.muted = true;
-          video.play().catch(() => {});
-        });
+    if (audio) {
+      audio.muted = true;
+      audio.loop = true;
+      audio.playsInline = true;
+      audio.play().catch(() => {});
     }
 
-    // 2. Unmute on ANY interaction anywhere on the window
+    // Unmute on ANY interaction anywhere on the window
     const unmuteAll = () => {
-      if (videoRef.current) {
-        videoRef.current.muted = false;
-        videoRef.current.volume = 1.0;
-        videoRef.current.play().catch(() => {});
+      if (audioRef.current) {
+        audioRef.current.muted = false;
+        audioRef.current.volume = 1.0;
+        audioRef.current.play().catch(() => {});
       }
       ['pointerdown', 'click', 'scroll', 'touchstart', 'mousemove', 'keydown'].forEach((evt) => {
         window.removeEventListener(evt, unmuteAll);
@@ -49,14 +47,109 @@ export default function Hero() {
       window.addEventListener(evt, unmuteAll, { once: true, passive: true });
     });
 
+    // WebGL Chroma/Alpha Keyer
+    const gl = canvas.getContext('webgl', { alpha: true, premultipliedAlpha: false });
+    let animId;
+
+    if (gl) {
+      const vsSource = `
+        attribute vec2 a_position;
+        attribute vec2 a_texCoord;
+        varying vec2 v_texCoord;
+        void main() {
+          gl_Position = vec4(a_position, 0.0, 1.0);
+          v_texCoord = a_texCoord;
+        }
+      `;
+
+      const fsSource = `
+        precision mediump float;
+        uniform sampler2D u_image;
+        varying vec2 v_texCoord;
+        void main() {
+          vec4 rgb = texture2D(u_image, vec2(v_texCoord.x, v_texCoord.y * 0.5));
+          vec4 mask = texture2D(u_image, vec2(v_texCoord.x, 0.5 + v_texCoord.y * 0.5));
+          gl_FragColor = vec4(rgb.rgb, mask.r);
+        }
+      `;
+
+      const createShader = (gl, type, source) => {
+        const shader = gl.createShader(type);
+        gl.shaderSource(shader, source);
+        gl.compileShader(shader);
+        return shader;
+      };
+
+      const program = gl.createProgram();
+      gl.attachShader(program, createShader(gl, gl.VERTEX_SHADER, vsSource));
+      gl.attachShader(program, createShader(gl, gl.FRAGMENT_SHADER, fsSource));
+      gl.linkProgram(program);
+      gl.useProgram(program);
+
+      // Geometry quad
+      const posBuffer = gl.createBuffer();
+      gl.bindBuffer(gl.ARRAY_BUFFER, posBuffer);
+      gl.bufferData(
+        gl.ARRAY_BUFFER,
+        new Float32Array([
+          -1, -1,  1, -1, -1,  1,
+          -1,  1,  1, -1,  1,  1,
+        ]),
+        gl.STATIC_DRAW
+      );
+
+      const posLoc = gl.getAttribLocation(program, 'a_position');
+      gl.enableVertexAttribArray(posLoc);
+      gl.vertexAttribPointer(posLoc, 2, gl.FLOAT, false, 0, 0);
+
+      const texCoordBuffer = gl.createBuffer();
+      gl.bindBuffer(gl.ARRAY_BUFFER, texCoordBuffer);
+      gl.bufferData(
+        gl.ARRAY_BUFFER,
+        new Float32Array([
+          0, 1,  1, 1,  0, 0,
+          0, 0,  1, 1,  1, 0,
+        ]),
+        gl.STATIC_DRAW
+      );
+
+      const texLoc = gl.getAttribLocation(program, 'a_texCoord');
+      gl.enableVertexAttribArray(texLoc);
+      gl.vertexAttribPointer(texLoc, 2, gl.FLOAT, false, 0, 0);
+
+      const texture = gl.createTexture();
+      gl.bindTexture(gl.TEXTURE_2D, texture);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+
+      gl.viewport(0, 0, canvas.width, canvas.height);
+      gl.clearColor(0, 0, 0, 0);
+
+      // Render loop
+      const render = () => {
+        if (video.readyState >= 2) {
+          gl.clear(gl.COLOR_BUFFER_BIT);
+          gl.bindTexture(gl.TEXTURE_2D, texture);
+          gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, video);
+          gl.drawArrays(gl.TRIANGLES, 0, 6);
+        }
+        animId = requestAnimationFrame(render);
+      };
+
+      animId = requestAnimationFrame(render);
+    }
+
     return () => {
+      if (animId) cancelAnimationFrame(animId);
       ['pointerdown', 'click', 'scroll', 'touchstart', 'mousemove', 'keydown'].forEach((evt) => {
         window.removeEventListener(evt, unmuteAll);
       });
     };
   }, []);
 
-  // 3D Mouse Parallax Tilt for Video
+  // 3D Mouse Parallax Tilt for Canvas
   const handleMouseMove = (e) => {
     if (!containerRef.current) return;
     const rect = containerRef.current.getBoundingClientRect();
@@ -72,10 +165,10 @@ export default function Hero() {
   };
 
   const handleVideoClick = () => {
-    if (videoRef.current) {
-      videoRef.current.muted = false;
-      videoRef.current.volume = 1.0;
-      videoRef.current.play().catch(() => {});
+    if (audioRef.current) {
+      audioRef.current.muted = false;
+      audioRef.current.volume = 1.0;
+      audioRef.current.play().catch(() => {});
     }
   };
 
@@ -93,11 +186,32 @@ export default function Hero() {
       onMouseLeave={handleMouseLeave}
       className="relative w-full h-[100svh] min-h-[640px] flex items-center justify-center overflow-hidden select-none"
     >
+      {/* Hidden Videos Driving WebGL & Synchronized Voice Audio */}
+      <video
+        ref={videoRef}
+        src="/hero-video-alpha.mp4"
+        playsInline
+        muted
+        autoPlay
+        loop
+        preload="auto"
+        className="hidden"
+      />
+      <video
+        ref={audioRef}
+        src="/hero-video.mp4"
+        playsInline
+        autoPlay
+        loop
+        preload="auto"
+        className="hidden"
+      />
+
       {/* =========================================================================
-          LAYER 1 (z-10): GIANT EDITORIAL WORDS IN THE BACKGROUND BEHIND THE VIDEO
+          LAYER 1 (z-10): GIANT EDITORIAL WORDS IN THE BACKGROUND BEHIND THE SPEAKER
           ========================================================================= */}
       <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none select-none z-10 text-center px-4">
-        {/* Top small availability pill */}
+        {/* Availability Pill */}
         <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-card/80 border border-line text-xs font-mono text-mute mb-2 sm:mb-4 shadow-sm backdrop-blur-sm">
           <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
           <span>Available for High-Impact Roles</span>
@@ -116,7 +230,7 @@ export default function Hero() {
       </div>
 
       {/* =========================================================================
-          LAYER 2 (z-20): FULL-SCREEN SPEAKING AVATAR STANDING IN FRONT OF THE WORDS
+          LAYER 2 (z-20): 100% BACKGROUND-REMOVED AVATAR STANDING IN FRONT OF THE WORDS
           ========================================================================= */}
       <motion.div
         animate={{ rotateX, rotateY }}
@@ -124,15 +238,11 @@ export default function Hero() {
         onClick={handleVideoClick}
         className="relative z-20 w-full h-[78vh] sm:h-[86vh] flex items-center justify-center cursor-pointer pointer-events-auto"
       >
-        <video
-          ref={videoRef}
-          src="/hero-video.mp4"
-          autoPlay
-          loop
-          muted
-          playsInline
-          preload="auto"
-          className="h-full w-auto max-w-full object-contain mix-blend-multiply dark:mix-blend-normal pointer-events-auto"
+        <canvas
+          ref={canvasRef}
+          width={848}
+          height={478}
+          className="h-full w-auto max-w-full object-contain pointer-events-auto"
         />
       </motion.div>
 
