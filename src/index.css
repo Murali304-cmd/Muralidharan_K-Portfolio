@@ -21,12 +21,14 @@
     background-color: var(--paper);
     color: var(--ink);
     font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+    transition: background-color 0.4s var(--ease), color 0.4s var(--ease);
   }
 
   body {
     background-color: var(--paper);
     color: var(--ink);
     overflow-x: hidden;
+    transition: background-color 0.4s var(--ease), color 0.4s var(--ease);
   }
 
   ::selection {
@@ -65,7 +67,7 @@
 }
 
 .ink-flood-row:hover {
-  color: #ffffff;
+  color: var(--paper) !important;
 }
 
 .ink-flood-row > * {
@@ -97,6 +99,29 @@
   backface-visibility: hidden;
 }
 
+/* 3D Card Sheen Glare Effect */
+.card-3d-glare {
+  position: relative;
+  overflow: hidden;
+}
+
+.card-3d-glare::after {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.15) 0%, transparent 60%);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s var(--ease);
+}
+
+.card-3d-glare:hover::after {
+  opacity: 1;
+}
+
 /* Custom smooth scrollbar */
 ::-webkit-scrollbar {
   width: 7px;
@@ -111,6 +136,10 @@
   border-radius: 9999px;
 }
 
+.dark ::-webkit-scrollbar-thumb {
+  background: #334155;
+}
+
 ::-webkit-scrollbar-thumb:hover {
   background: var(--mute);
 }
@@ -118,4 +147,10 @@
 /* Expanding horizontal accordion panel transitions */
 .accordion-panel {
   transition: flex 0.6s var(--ease), max-width 0.6s var(--ease);
+}
+
+/* Cyber Starry Constellation Backdrop in Dark Mode */
+.dark-cyber-grid {
+  background-image: radial-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px);
+  background-size: 32px 32px;
 }

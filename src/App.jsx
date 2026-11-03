@@ -10,28 +10,31 @@ import ExperienceSpine from './components/ExperienceSpine';
 import AchievementsHorizontal from './components/AchievementsHorizontal';
 import ContactLetterHop from './components/ContactLetterHop';
 import Footer from './components/Footer';
+import { useThemeMode } from './hooks/useThemeMode';
 
 export default function App() {
-  return (
-    <div className="min-h-screen bg-paper text-ink font-sans antialiased selection:bg-ink selection:text-paper relative">
-      {/* 1. Frosted Glass Top Navigation */}
-      <Navbar />
+  const { mode, toggleMode, isCyber } = useThemeMode();
 
-      {/* 2. One Continuous Calm Scroll (No splash screens, no page curtains) */}
+  return (
+    <div className={`min-h-screen bg-paper text-ink font-sans antialiased selection:bg-ink selection:text-paper relative ${isCyber ? 'dark-cyber-grid' : ''}`}>
+      {/* 1. Frosted Glass Top Navigation with Dual Mode Switcher */}
+      <Navbar mode={mode} toggleMode={toggleMode} />
+
+      {/* 2. One Continuous Calm Scroll */}
       <main>
         {/* Section 01: Hero with Full Uncropped 16:9 Landscape Video */}
         <Hero />
 
-        {/* Section 02: About with 3-Column Grid & Hanging Lanyard ID Card */}
+        {/* Section 02: About with 3-Column Grid & Hanging Lanyard ID Card (3D Tilt) */}
         <AboutLanyard />
 
-        {/* Section 03: The Engineering & Research Mountain Trek */}
+        {/* Section 03: The Engineering & Research Mountain Trek (Altitude Telemetry) */}
         <MountainJourney />
 
         {/* Section 04: Periodic Table of My Stack (Curated Power Elements) */}
         <SkillsPeriodic />
 
-        {/* Section 05: Selected Work (Expanding Horizontal Accordion Gallery) */}
+        {/* Section 05: Selected Work (Expanding Horizontal Accordion Gallery + Live Simulators) */}
         <WorkAccordion />
 
         {/* Section 06: Always Learning (Ink-Flood Certifications Index) */}

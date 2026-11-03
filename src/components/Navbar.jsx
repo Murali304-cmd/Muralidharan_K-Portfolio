@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, Download } from 'lucide-react';
+import { Menu, X, Download, Sun, Moon, Volume2, VolumeX } from 'lucide-react';
+import { sound } from '../hooks/useSoundHaptics';
 
 const NAV_LINKS = [
   { id: 'about', label: 'About' },
@@ -12,11 +13,12 @@ const NAV_LINKS = [
   { id: 'contact', label: 'Contact' },
 ];
 
-export default function Navbar() {
+export default function Navbar({ mode, toggleMode }) {
   const [scrolled, setScrolled] = useState(false);
   const [scrollProgress, setScrollProgress] = useState(0);
   const [activeSection, setActiveSection] = useState('about');
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [soundEnabled, setSoundEnabled] = useState(true);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -26,7 +28,6 @@ export default function Navbar() {
         setScrollProgress((window.scrollY / total) * 100);
       }
 
-      // Track active section
       for (let i = NAV_LINKS.length - 1; i >= 0; i--) {
         const el = document.getElementById(NAV_LINKS[i].id);
         if (el && el.offsetTop <= window.scrollY + 200) {
@@ -41,9 +42,16 @@ export default function Navbar() {
   }, []);
 
   const scrollTo = (id) => {
+    sound.playClick();
     setMobileMenuOpen(false);
     const el = document.getElementById(id);
     if (el) el.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  const handleToggleSound = () => {
+    const next = sound.toggleSound();
+    setSoundEnabled(next);
+    if (next) sound.playClick();
   };
 
   return (
@@ -65,6 +73,7 @@ export default function Navbar() {
           {/* Left: Round Initials Mark + Full Name */}
           <a
             href="#hero"
+            onClick={() => sound.playClick()}
             className="flex items-center gap-3 group focus:outline-none"
           >
             <div
@@ -85,51 +94,92 @@ export default function Navbar() {
             </span>
           </a>
 
-          {/* Center / Right: Frosted Glass Nav Pill (Desktop) */}
-          <nav className="hidden md:flex items-center gap-1 bg-white/80 backdrop-blur-md px-2 py-1.5 rounded-full border border-line shadow-hairline">
-            {NAV_LINKS.map((item) => {
-              const isActive = activeSection === item.id;
-              return (
-                <button
-                  key={item.id}
-                  onClick={() => scrollTo(item.id)}
-                  className={`relative px-3.5 py-1 text-xs font-mono transition-colors duration-200 ${
-                    isActive ? 'text-paper font-semibold' : 'text-mute hover:text-ink'
-                  }`}
-                >
-                  {isActive && (
-                    <motion.div
-                      layoutId="activeNavPill"
-                      className="absolute inset-0 bg-ink rounded-full -z-10 shadow-sm"
-                      transition={{ type: 'spring', damping: 25, stiffness: 320 }}
-                    />
-                  )}
-                  {item.label}
-                </button>
-              );
-            })}
+          {/* Center / Right: Frosted Glass Nav Pill with Dual Mode Switcher */}
+          <div className="hidden md:flex items-center gap-3">
+            <nav className="flex items-center gap-1 bg-card/85 backdrop-blur-md px-2 py-1.5 rounded-full border border-line shadow-soft-lg">
+              {NAV_LINKS.map((item) => {
+                const isActive = activeSection === item.id;
+                return (
+                  <button
+                    key={item.id}
+                    onClick={() => scrollTo(item.id)}
+                    className={`relative px-3.5 py-1 text-xs font-mono transition-colors duration-200 ${
+                      isActive ? 'text-paper font-semibold' : 'text-mute hover:text-ink'
+                    }`}
+                  >
+                    {isActive && (
+                      <motion.div
+                        layoutId="activeNavPill"
+                        className="absolute inset-0 bg-ink rounded-full -z-10 shadow-sm"
+                        transition={{ type: 'spring', damping: 25, stiffness: 320 }}
+                      />
+                    )}
+                    {item.label}
+                  </button>
+                );
+              })}
 
-            <div className="w-px h-3.5 bg-line mx-1" />
+              <div className="w-px h-3.5 bg-line mx-1" />
 
-            {/* Direct Resume Download Button */}
-            <a
-              href="/resume.pdf"
-              download="Muralidharan_K_Resume.pdf"
-              className="px-3.5 py-1 text-xs font-mono text-ink hover:text-mute transition-colors flex items-center gap-1"
+              {/* Direct Resume Download Button */}
+              <a
+                href="/resume.pdf"
+                download="Muralidharan_K_Resume.pdf"
+                onClick={() => sound.playClick()}
+                className="px-3 py-1 text-xs font-mono text-ink hover:text-mute transition-colors flex items-center gap-1"
+              >
+                <span>CV</span>
+                <span className="text-[10px]">↓</span>
+              </a>
+            </nav>
+
+            {/* DUAL MODE TOGGLE BUTTON (Day Paper ⇄ Cyber Dark) */}
+            <button
+              onClick={toggleMode}
+              title={`Switch to ${mode === 'paper' ? 'Cyber Obsidian Mode' : 'Editorial Paper Mode'}`}
+              className="w-9 h-9 rounded-full bg-card border border-line flex items-center justify-center text-ink hover:scale-105 active:scale-95 transition-all shadow-soft-lg"
             >
-              <span>CV</span>
-              <span className="text-[10px]">↓</span>
-            </a>
-          </nav>
+              {mode === 'paper' ? (
+                <Moon className="w-4 h-4 text-ink" />
+              ) : (
+                <Sun className="w-4 h-4 text-amber-400" />
+              )}
+            </button>
 
-          {/* Mobile "Menu" Pill */}
-          <button
-            onClick={() => setMobileMenuOpen(true)}
-            className="md:hidden px-3.5 py-1.5 rounded-full bg-white/90 border border-line shadow-hairline text-xs font-mono font-medium text-ink flex items-center gap-1.5"
-          >
-            <Menu className="w-3.5 h-3.5" />
-            <span>Menu</span>
-          </button>
+            {/* SOUND HAPTICS TOGGLE BUTTON */}
+            <button
+              onClick={handleToggleSound}
+              title={soundEnabled ? 'Mute Interface Sound Effects' : 'Enable Interface Sound Effects'}
+              className="w-9 h-9 rounded-full bg-card border border-line flex items-center justify-center text-ink hover:scale-105 active:scale-95 transition-all shadow-soft-lg"
+            >
+              {soundEnabled ? (
+                <Volume2 className="w-4 h-4 text-ink" />
+              ) : (
+                <VolumeX className="w-4 h-4 text-faint" />
+              )}
+            </button>
+          </div>
+
+          {/* Mobile "Menu" Pill + Mode Switcher */}
+          <div className="flex md:hidden items-center gap-2">
+            <button
+              onClick={toggleMode}
+              className="w-8 h-8 rounded-full bg-card border border-line flex items-center justify-center text-ink"
+            >
+              {mode === 'paper' ? <Moon className="w-3.5 h-3.5" /> : <Sun className="w-3.5 h-3.5 text-amber-400" />}
+            </button>
+
+            <button
+              onClick={() => {
+                sound.playPaperRustle();
+                setMobileMenuOpen(true);
+              }}
+              className="px-3 py-1 rounded-full bg-card border border-line text-xs font-mono text-ink flex items-center gap-1"
+            >
+              <Menu className="w-3.5 h-3.5" />
+              <span>Menu</span>
+            </button>
+          </div>
         </div>
       </header>
 
@@ -169,7 +219,7 @@ export default function Navbar() {
               ))}
             </div>
 
-            <div className="pt-4 border-t border-line">
+            <div className="pt-4 border-t border-line space-y-3">
               <a
                 href="/resume.pdf"
                 download="Muralidharan_K_Resume.pdf"

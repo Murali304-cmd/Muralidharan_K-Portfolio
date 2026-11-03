@@ -159,3 +159,4 @@ export default function SkillsPeriodic() {
     </section>
   );
 }
+
