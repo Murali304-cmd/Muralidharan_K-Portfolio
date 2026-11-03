@@ -32,7 +32,7 @@ export default function SkillsPeriodic() {
               className={`px-3.5 py-1.5 rounded-full text-xs font-mono transition-all ${
                 activeCategory === cat.id
                   ? 'bg-ink text-paper font-semibold shadow-sm'
-                  : 'bg-white border border-line text-mute hover:text-ink hover:border-line-bold'
+                  : 'bg-card border border-line text-mute hover:text-ink hover:border-line-bold'
               }`}
             >
               {cat.label}
@@ -61,8 +61,8 @@ export default function SkillsPeriodic() {
                   onMouseEnter={() => setSelectedSkill(skill)}
                   className={`p-4 rounded-2xl cursor-pointer transition-all border text-left group select-none relative ${
                     isSelected
-                      ? 'bg-white border-ink shadow-soft-lg scale-[1.03] z-10 ring-1 ring-ink'
-                      : 'bg-white/80 border-line hover:border-line-bold hover:bg-white'
+                      ? 'bg-card border-ink shadow-soft-lg scale-[1.03] z-10 ring-1 ring-ink'
+                      : 'bg-card/80 border-line hover:border-line-bold hover:bg-card'
                   }`}
                 >
                   {/* Atomic Number + Category Tag */}
@@ -104,7 +104,7 @@ export default function SkillsPeriodic() {
             initial={{ opacity: 0, scale: 0.96 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.2 }}
-            className="bg-white rounded-3xl p-6 sm:p-7 border border-line shadow-soft-lg"
+            className="bg-card rounded-3xl p-6 sm:p-7 border border-line shadow-soft-lg"
           >
             {/* Element Logo / Symbol Badge (150px Pop Animation) */}
             <div className="flex items-center justify-center py-6 border-b border-line bg-paper/60 rounded-2xl mb-5">

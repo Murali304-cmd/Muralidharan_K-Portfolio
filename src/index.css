@@ -15,6 +15,18 @@
   --ease: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
+.dark {
+  --paper: #090D16;
+  --card: #111726;
+  --ink: #F1F5F9;
+  --ink-2: #CBD5E1;
+  --mute: #94A3B8;
+  --faint: #475569;
+  --line: rgba(255, 255, 255, 0.09);
+  --line-bold: rgba(255, 255, 255, 0.18);
+  --soft: #1A2338;
+}
+
 @layer base {
   html {
     scroll-behavior: smooth;

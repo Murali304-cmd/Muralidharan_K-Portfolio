@@ -70,7 +70,7 @@ export default function ExperienceSpine() {
             {/* Spine Stop Node */}
             <div className="absolute -left-[41px] sm:-left-[49px] top-1.5 w-4 h-4 rounded-full bg-paper border-2 border-ink group-hover:scale-125 transition-transform" />
 
-            <div className="bg-white rounded-2xl p-6 border border-line shadow-hairline hover:border-line-bold transition-all">
+            <div className="bg-card rounded-2xl p-6 border border-line shadow-hairline hover:border-line-bold transition-all">
               <div className="flex flex-wrap items-center justify-between gap-2 mb-2">
                 <span className="font-mono text-xs font-bold text-ink">
                   {item.year}

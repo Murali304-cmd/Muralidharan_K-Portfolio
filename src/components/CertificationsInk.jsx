@@ -6,7 +6,7 @@ export default function CertificationsInk() {
   return (
     <section
       id="certifications"
-      className="py-24 bg-white border-y border-line"
+      className="py-24 bg-card border-y border-line transition-colors duration-300"
     >
       <div className="max-w-[1320px] mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">

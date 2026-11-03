@@ -18,7 +18,7 @@ export default function Footer() {
 
       <button
         onClick={scrollToTop}
-        className="flex items-center gap-1.5 text-ink hover:text-mute transition-colors border border-line px-3.5 py-1.5 rounded-full bg-white shadow-hairline"
+        className="flex items-center gap-1.5 text-ink hover:text-mute transition-colors border border-line px-3.5 py-1.5 rounded-full bg-card shadow-hairline"
       >
         <span>Back to top</span>
         <ArrowUp className="w-3.5 h-3.5" />

@@ -1,5 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 export default {
+  darkMode: 'class',
   content: [
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
@@ -7,17 +8,17 @@ export default {
   theme: {
     extend: {
       colors: {
-        paper: '#f4f2ee',
-        card: '#ffffff',
+        paper: 'var(--paper)',
+        card: 'var(--card)',
         ink: {
-          DEFAULT: '#0d0d0d',
-          2: '#2a2a2a',
+          DEFAULT: 'var(--ink)',
+          2: 'var(--ink-2)',
         },
-        mute: '#77756f',
-        faint: '#a9a6a0',
-        soft: '#e9e6e0',
-        line: 'rgba(13, 13, 13, 0.08)',
-        'line-bold': 'rgba(13, 13, 13, 0.16)',
+        mute: 'var(--mute)',
+        faint: 'var(--faint)',
+        soft: 'var(--soft)',
+        line: 'var(--line)',
+        'line-bold': 'var(--line-bold)',
       },
       fontFamily: {
         sans: ['"Inter Tight"', 'system-ui', '-apple-system', 'sans-serif'],
@@ -31,8 +32,8 @@ export default {
         'card': '26px',
       },
       boxShadow: {
-        'hairline': 'inset 0 0 0 1px rgba(13, 13, 13, 0.08)',
-        'soft-lg': '0 20px 40px -15px rgba(13, 13, 13, 0.06)',
+        'hairline': 'inset 0 0 0 1px var(--line)',
+        'soft-lg': '0 20px 40px -15px rgba(0, 0, 0, 0.1)',
       }
     },
   },
