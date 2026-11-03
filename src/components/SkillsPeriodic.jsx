@@ -15,9 +15,6 @@ export default function SkillsPeriodic() {
       {/* Section Header */}
       <div className="mb-12 flex flex-col md:flex-row md:items-end justify-between gap-6">
         <div>
-          <div className="font-mono text-xs text-mute uppercase tracking-widest mb-2">
-            04 — Technical Architecture
-          </div>
           <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tightest text-ink">
             Periodic table of my <span className="font-serif-italic text-mute">stack.</span>
           </h2>

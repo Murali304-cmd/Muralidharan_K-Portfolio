@@ -102,11 +102,8 @@ export default function MountainJourney() {
       id="journey"
       className="py-24 px-4 sm:px-6 lg:px-8 max-w-[1320px] mx-auto border-t border-line"
     >
-      {/* Section Tag & Heading */}
+      {/* Section Heading */}
       <div className="mb-12">
-        <div className="font-mono text-xs text-mute uppercase tracking-widest mb-2">
-          03 — The Engineering Trek
-        </div>
         <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tightest text-ink">
           Trekking through skills, research & <span className="font-serif-italic text-mute">engineering.</span>
         </h2>

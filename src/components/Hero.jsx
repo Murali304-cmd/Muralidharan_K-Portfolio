@@ -93,12 +93,8 @@ export default function Hero() {
         </span>
       </div>
 
-      {/* Top Tag & Main Heading */}
-      <div className="relative z-10 text-center max-w-3xl mx-auto">
-        <div className="inline-block font-mono text-xs uppercase tracking-widest text-mute mb-4">
-          01 — Data & Intelligence Portfolio
-        </div>
-
+      {/* Main Heading */}
+      <div className="relative z-10 text-center max-w-3xl mx-auto mb-2">
         <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tightest leading-tight text-ink">
           Data Analyst & <span className="font-serif-italic text-mute">Machine Learning</span> Developer.
         </h1>

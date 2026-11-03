@@ -37,9 +37,6 @@ export default function AboutLanyard() {
     >
       {/* Section Header */}
       <div className="mb-12">
-        <div className="font-mono text-xs text-mute uppercase tracking-widest mb-2">
-          02 — About & Identity
-        </div>
         <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tightest text-ink">
           Crafting systems from <span className="font-serif-italic text-mute">data & curiosity.</span>
         </h2>

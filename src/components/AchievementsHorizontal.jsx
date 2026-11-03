@@ -101,9 +101,6 @@ export default function AchievementsHorizontal() {
       {/* Section Header */}
       <div className="mb-12 flex flex-col md:flex-row md:items-end justify-between gap-4">
         <div>
-          <div className="font-mono text-xs text-mute uppercase tracking-widest mb-2">
-            08 — Verified Metrics
-          </div>
           <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tightest text-ink">
             Proven <span className="font-serif-italic text-mute">results.</span>
           </h2>

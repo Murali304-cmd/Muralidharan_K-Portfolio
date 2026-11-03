@@ -239,9 +239,6 @@ export default function WorkAccordion() {
     >
       {/* Section Header */}
       <div className="mb-12">
-        <div className="font-mono text-xs text-mute uppercase tracking-widest mb-2">
-          05 — Selected Work
-        </div>
         <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tightest text-ink">
           Things I've <span className="font-serif-italic text-mute">built.</span>
         </h2>

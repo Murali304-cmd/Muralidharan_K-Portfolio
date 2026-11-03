@@ -45,10 +45,6 @@ export default function ContactLetterHop() {
         {ariaLiveMsg}
       </div>
 
-      <div className="font-mono text-xs text-mute uppercase tracking-widest mb-4">
-        09 — Direct Inquiries
-      </div>
-
       {/* Huge Heading with Letter Hop Animation on Cursor Hover */}
       <div className="max-w-4xl select-none mb-12">
         <h2 className="text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tightest text-ink leading-[1.08]">

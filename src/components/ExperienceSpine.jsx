@@ -55,9 +55,6 @@ export default function ExperienceSpine() {
     >
       {/* Section Header */}
       <div className="mb-14">
-        <div className="font-mono text-xs text-mute uppercase tracking-widest mb-2">
-          07 — One Continuous Path
-        </div>
         <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tightest text-ink">
           Education & <span className="font-serif-italic text-mute">experience.</span>
         </h2>

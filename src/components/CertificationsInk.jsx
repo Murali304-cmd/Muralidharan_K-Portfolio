@@ -12,9 +12,6 @@ export default function CertificationsInk() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
           {/* Left Column: Sticky Heading ("Always learning.") + Count */}
           <div className="lg:col-span-4 sticky top-24">
-            <div className="font-mono text-xs text-mute uppercase tracking-widest mb-2">
-              06 — Verified Certifications
-            </div>
             <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tightest text-ink">
               Always <span className="font-serif-italic text-mute">learning.</span>
             </h2>
