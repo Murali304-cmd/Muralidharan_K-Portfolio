@@ -83,14 +83,14 @@ export default function Navbar({ mode, toggleMode }) {
                   : 'border border-ink text-ink bg-transparent'
               }`}
             >
-              KM
+              MK
             </div>
             <span
               className={`font-semibold text-sm tracking-tight text-ink transition-opacity duration-300 ${
                 scrolled ? 'opacity-0 pointer-events-none' : 'opacity-100'
               }`}
             >
-              K. Muralidharan
+              Muralidharan K
             </span>
           </a>
 

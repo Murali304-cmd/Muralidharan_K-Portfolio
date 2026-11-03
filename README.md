@@ -1,4 +1,4 @@
-# K. Muralidharan — Personal Interactive Portfolio & Data Product
+# Muralidharan K — Personal Interactive Portfolio & Data Product
 
 > **"The Portfolio is a Data Product"** — An interactive, story-driven digital journey engineered for the **Skillinf Portfolio Design Hackathon 2026**.
 
@@ -9,59 +9,49 @@
 
 ---
 
-## 🎯 Big Idea & Story Pipeline
+## 🎯 Architecture & Dual Operational Modes
 
-The portfolio operates as a data analytics pipeline scrollable from ingestion to final delivery:
+The portfolio operates with a dual aesthetic engine:
+* **Day Mode (Editorial Paper):** Warm `#f4f2ee` canvas, crisp ink typography, and minimalist borders.
+* **Cyber Mode (Obsidian Dark):** Deep `#090D16` palette, starry constellation grid, glowing telemetry coordinates, and cyan/emerald circuit highlights.
 
 ```
-[00 BOOT]      Scene 1: Interactive Story Envelope & Talking 3D Hero
-      │
-[01 INGEST]    Scene 2: Educational Journey (Dharmapuri ➔ Dr. MCET Pollachi) & 3D Lanyard ID
-      │
-[02 CLEAN]     Scene 3: Periodic Table of My Stack (Element Tiles & Inspector)
-      │
-[03 MODEL]     Scene 4: Project Showcase & Interactive Case Files (NILA, Energy RL, Power BI)
-      │
-[04 DEPLOY]    Scene 5: Experience Timeline (Thiranx Internship) & Global Ranks (CodeVita)
-      │
-[05 VALIDATE]  Scene 6: LeetCode Analytics Dashboard (136 Solved, Circular Gauge)
-      │
-[06 INSIGHTS]  Scene 7: Verified Curriculum Vitae (Direct PDF Download)
-      │
-[07 REPORT]    Scene 8: Unfolding Contact Envelope (Direct Email, Tel & Social Links)
+[01 HERO]           Full uncropped 16:9 landscape video with multiply canvas melt & ghost MURALI
+       │
+[02 ABOUT]          3-column identity grid with 3D mouse gyro tilt & hanging lanyard ID card
+       │
+[03 TREK]           Mountain engineering ascent from Dharmapuri basecamp to Dr. MCET summit
+       │
+[04 SKILLS]         8 power element periodic table with 150px logo pop inspector
+       │
+[05 WORK]           Expanding horizontal accordion gallery with 3 live project simulators
+       │
+[06 CERTIFICATIONS] Numbered credential index with scaleX ink-flood hover interaction
+       │
+[07 EXPERIENCE]     One continuous chronological path with scroll-drawn spine
+       │
+[08 ACHIEVEMENTS]   Horizontal landscape cards with live ease-out count-up numbers
+       │
+[09 CONTACT]        Letter-hop bouncing title, spinning say-hello badge & 3D wax seal envelope
 ```
 
 ---
 
 ## 🚀 Key Signature Features
 
-1. **Creative Journey Loading Experience**: Custom loading sequence with a road, travelling vehicle, emerging tech icons, and college campus milestone.
-2. **Talking 3D Hero & Story Envelope**: Unfolding center envelope revealing a 3D animated avatar video with audio toggle, `mix-blend-mode: multiply` canvas integration, and floating ghost typography.
-3. **Animated Educational Journey to College**: Interactive road diorama tracking the route from Dharmapuri to Dr. Mahalingam College of Engineering and Technology (Dr. MCET), Pollachi.
-4. **Hanging 3D Lanyard Student ID Card**: Interactive, flippable badge featuring a portrait bust on the front and verified academic metrics (8.3 CGPA, Expected June 2028) on the back.
-5. **Periodic Table of My Stack**: Interactive chemical-element tiles with category filters, atomic numbers, and connected project inspection. Zero invented percentages.
-6. **Project Case Files & Illustrative Mini-UIs**: Detailed Problem ➔ Approach ➔ Stack ➔ Outcome case files with CSS/SVG simulated mini-dashboards (Smart Energy RL dispatch, NILA offline RAG chat, Power BI RFM clustering).
-7. **LeetCode Analytics Dashboard**: Dedicated matrix displaying 136 solved problems (54 Easy, 72 Medium, 10 Hard) with circular SVG progress visualization.
-8. **60-Second Judge Tour**: Dedicated hackathon judging mode that automatically scrolls through the best moments of each section with a synchronized caption bar and countdown timer.
-9. **Offline AI Assistant ("Ask Muralidharan")**: Instant, client-side RAG-style query panel grounded strictly in local portfolio JSON data.
-10. **Command Palette (`Ctrl+K` / `Cmd+K`)**: Rapid keyboard navigation across sections, instant email copy, resume download, and theme toggle.
-11. **Interactive Contact Envelope**: Clickable envelope unfolding into verified email (`muralidharanprathap@gmail.com`), phone (`+91 7639170303`), and social profiles.
-
----
-
-## 🛠️ Tech Stack & Architecture
-
-- **Frontend Framework**: React 18 + Vite 6
-- **Styling**: Tailwind CSS with custom light/dark color variables, soft shadows, and dot-grid pattern
-- **Animation**: Framer Motion for scroll-linked layout transitions and 3D transforms
-- **Icons**: Lucide React
-- **Data Layer**: Clean decoupled architecture in `src/data/`:
-  - `profile.js`: Personal facts, education, contact info
-  - `skills.js`: Periodic table element stack
-  - `projects.js`: Project metadata and case files
-  - `experience.js`: Internships, certifications, achievements
-  - `leetcode.js`: Editable DSA statistics
-  - `journey.js`: Pipeline stage definitions
+1. **Dual Mode System (`useThemeMode.js`)**: Real-time morphing between Editorial Paper (`#f4f2ee`) and Cyber Obsidian (`#090D16`) with localStorage persistence.
+2. **Web Audio API Micro-Haptics (`useSoundHaptics.js`)**: Real-time browser-synthesized mechanical clicks, paper rustle, and victory chimes (0 kB audio files).
+3. **Full 16:9 Landscape Video Hero**: Uncropped video player (`aspect-video`) with `mix-blend-mode: multiply` and 46px solid ink play/pause audio toggle.
+4. **Hanging 3D Lanyard Student ID**: 3D cursor-tracking parallax math (`rotateX`, `rotateY`), damped pendulum sway, and 180° flip revealing verified 8.3 CGPA record.
+5. **The Engineering Mountain Trek**: Interactive elevation ridge map with real-time altitude telemetry HUD (Altitude 320m–2,150m, Barometer, Grade) and animated climbing trekker.
+6. **Curated 8-Element Periodic Table**: Clean 8-column layout (Python, Power BI, SQL, ML, RAG, FastAPI, Pandas, Excel) with sticky 150px logo pop inspector.
+7. **Live Interactive Project Simulators**:
+   * *Smart Microgrid Lab:* Real-time sliders for Solar kW & Grid Tariff with dynamic Battery SoC charging/discharging and RL policy action readout.
+   * *NILA Local RAG Terminal:* Interactive prompt testing with instant FAISS cosine vector distance matches and grounded responses.
+   * *Cash Demand Forecaster:* Real-time regression variance simulator.
+8. **Ink-Flood Certifications**: Rows flood with ink (`scaleX 0→1`), text turning white with sliding `↗` arrow on hover.
+9. **Achievements Horizontal Gallery**: Verified metrics with count-up numbers: TCS CodeVita Global Rank **16,434**, LeetCode **136** solved, and Dr. MCET **8.3 CGPA**.
+10. **Interactive 3D Wax Seal Envelope**: Center contact card with clickable `MK` wax seal that pops open with celebratory confetti, revealing `mailto:` and `tel:+917639170303`.
 
 ---
 
@@ -83,37 +73,14 @@ Open `http://localhost:5173` in your browser.
 npm run build
 ```
 
-### 4. Preview Production Build
-```bash
-npm run preview
-```
-
----
-
-## 🌐 Deployment to Vercel
-
-This repository includes a production-ready `vercel.json` configured for SPA routing and asset caching.
-
-### Deploy via Vercel CLI:
-```bash
-npx vercel
-```
-
-### Deploy via GitHub:
-1. Push this repository to GitHub (`https://github.com/Murali304-cmd/portfolio`).
-2. Import the repository in [Vercel](https://vercel.com).
-3. Framework Preset: **Vite**
-4. Root Directory: `./`
-5. Click **Deploy**.
-
 ---
 
 ## 🔒 Factual Integrity Guarantee
 
-All statistics, dates, grades, and credentials displayed across this portfolio are 100% grounded in K. Muralidharan's verified resume and academic records:
-- **CGPA**: 8.3 (Dr. MCET Pollachi)
+All statistics, dates, grades, and credentials displayed across this portfolio are 100% grounded in Muralidharan K's verified resume and academic records:
+- **Full Name**: Muralidharan K
+- **CGPA**: 8.3 (Dr. Mahalingam College of Engineering and Technology, Pollachi)
 - **LeetCode**: 136 Solved (Username: `Murali_09`)
 - **TCS CodeVita Season 13**: Global Rank 16,434
 - **Internship**: Thiranx Data Analytics Intern (June 06 – July 05, 2026)
 - **Official Resume PDF**: Downloadable at `/resume.pdf`
-

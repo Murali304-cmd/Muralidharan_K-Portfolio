@@ -16,7 +16,6 @@ export default function AboutLanyard() {
     const rect = cardRef.current.getBoundingClientRect();
     const x = e.clientX - rect.left - rect.width / 2;
     const y = e.clientY - rect.top - rect.height / 2;
-    // Map -rect/2 -> rect/2 to -10deg -> 10deg
     setRotateX((-y / (rect.height / 2)) * 12);
     setRotateY((x / (rect.width / 2)) * 12);
   };
@@ -143,7 +142,7 @@ export default function AboutLanyard() {
                   <div className="w-[128px] h-[156px] rounded-xl overflow-hidden p-1 bg-gradient-to-b from-slate-200 to-slate-400 dark:from-slate-700 dark:to-slate-900 shadow-inner group">
                     <img
                       src="/murali-bust.webp"
-                      alt="K. Muralidharan"
+                      alt="Muralidharan K"
                       className="w-full h-full object-cover object-top rounded-lg group-hover:scale-105 transition-transform"
                     />
                   </div>
@@ -182,7 +181,7 @@ export default function AboutLanyard() {
                       <div key={i} className="h-full bg-ink" style={{ width: `${w * 1.5}px` }} />
                     ))}
                   </div>
-                  <span className="text-[8px] font-mono text-mute">3D GYRO • TAP TO FLIP</span>
+                  <span className="text-[8px] font-mono text-mute">MK-2028-IT • TAP TO FLIP</span>
                 </div>
               </div>
 
@@ -207,7 +206,7 @@ export default function AboutLanyard() {
                 </div>
 
                 <div className="pt-3 border-t border-white/10 text-[10px] font-mono text-faint">
-                  <div className="italic text-paper/80 mb-1">Muralidharan K.</div>
+                  <div className="italic text-paper/80 mb-1">{profile.name}.</div>
                   <div>If found, say hello · {profile.email}</div>
                 </div>
               </div>

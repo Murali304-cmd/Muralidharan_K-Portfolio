@@ -1,6 +1,6 @@
 # 🏆 100-Point Master Upgradation Plan & Technical Implementation Specification
 
-> **Project:** K. Muralidharan — Personal Portfolio & Data Product  
+> **Project:** Muralidharan K — Personal Portfolio & Data Product  
 > **Target Event:** Skillinf Portfolio Design Hackathon 2026  
 > **Architecture:** Next-Gen React + Vite + Tailwind CSS + Framer Motion + Web Audio API  
 > **Status:** 100% Implemented & Verified Live  
@@ -31,7 +31,7 @@ The portfolio is engineered as a hybrid between an **Awwwards-level Editorial Pu
 * **Day Mode (Editorial Paper):** Warm `#f4f2ee` canvas, crisp ink typography, and minimalist borders.
 * **Cyber Mode (Obsidian Dark):** Deep `#090D16` palette, starry constellation grid, glowing telemetry coordinates, and cyan/emerald circuit highlights.
 
-All text and statistics are **strictly grounded in K. Muralidharan's verified credentials** (B.E. IT at Dr. MCET Pollachi, 8.3 CGPA, LeetCode 136 solved, TCS CodeVita Global Rank 16,434, Thiranx Data Analytics internship).
+All text and statistics are **strictly grounded in Muralidharan K's verified credentials** (B.E. IT at Dr. MCET Pollachi, 8.3 CGPA, LeetCode 136 solved, TCS CodeVita Global Rank 16,434, Thiranx Data Analytics internship).
 
 ---
 
@@ -104,7 +104,7 @@ All text and statistics are **strictly grounded in K. Muralidharan's verified cr
 - [x] **54. Sticky Inspector Panel:** 320px sidebar with 150px logo pop animation on hover.
 - [x] **55. Category Filter Chips:** Instant category filtering (All Stack, Data & BI, Machine Learning, AI & Systems).
 - [x] **56. Diagonal Wave Reveal:** Staggered entrance animation across element rows and columns.
-- [x] **57. Connected Projects List:** Inspector lists exact projects that utilize the inspected skill.
+- [x] **57. Connected Projects List:** Inspector lists exact projects that utilize the selected skill.
 - [x] **58. Official Brand Palette:** Preserves authentic Python blue/gold, Power BI amber, and FastAPI teal.
 - [x] **59. Zero-Percentage Guarantee:** Strict omission of speculative proficiency percentage bars.
 - [x] **60. Micro-Click Haptic Feedback:** Soft synthesized click upon selecting elements.
@@ -155,7 +155,7 @@ All text and statistics are **strictly grounded in K. Muralidharan's verified cr
 ### Module 10: Letter-Hop Contact, 3D Wax Seal Envelope & Web Audio Haptics (Points 91–100)
 - [x] **91. Letter-Hop Headline:** *"Let's build / something together."* where each character bounces (`translateY: -8px`) on hover.
 - [x] **92. Spinning "Say Hello" Circular Badge:** Continuous 360° rotation of circular path text around a mail trigger.
-- [x] **93. Interactive 3D Wax Seal Envelope:** Realistic 3D sealed envelope with wax seal `KM` that pops open with celebratory confetti.
+- [x] **93. Interactive 3D Wax Seal Envelope:** Realistic 3D sealed envelope with wax seal `MK` that pops open with celebratory confetti.
 - [x] **94. Underlined Email Anchor:** Large high-contrast link to `mailto:muralidharanprathap@gmail.com`.
 - [x] **95. Copy Email Chip with Live ARIA:** Copies email to clipboard and announces *"Copied ✓"* via screen-reader `aria-live`.
 - [x] **96. Direct Telephone Call Trigger:** Accessible `tel:+917639170303` action button.
@@ -201,7 +201,7 @@ Portfolio/
 │   ├── murali-bust.webp              ── High-res portrait bust for 3D lanyard
 │   ├── murali-portrait.jpg           ── Studio portrait
 │   ├── og.jpg                        ── OpenGraph card preview (1200x630)
-│   └── favicon.svg                   ── Minimal KM brand icon
+│   └── favicon.svg                   ── Minimal MK brand icon
 ├── vercel.json                       ── Vercel deployment & caching configuration
 ├── package.json                      ── React 18, Vite 6, Tailwind CSS, Framer Motion
 └── IMPLEMENTATION_PLAN.md            ── This master specification document

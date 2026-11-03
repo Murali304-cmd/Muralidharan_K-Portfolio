@@ -101,3 +101,4 @@ class SoundHaptics {
 }
 
 export const sound = new SoundHaptics();
+

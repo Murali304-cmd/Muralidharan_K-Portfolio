@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Flag, CheckCircle2, Compass, Mountain, ArrowUpRight, Sparkles, Sliders } from 'lucide-react';

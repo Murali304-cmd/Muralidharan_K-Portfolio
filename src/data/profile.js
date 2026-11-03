@@ -1,6 +1,7 @@
 export const profile = {
-  name: "K. Muralidharan",
+  name: "Muralidharan K",
   shortName: "Murali",
+  initials: "MK",
   title: "Data Analyst | Machine Learning Developer | AI Enthusiast",
   degree: "B.E. Information Technology",
   college: "Dr. Mahalingam College of Engineering and Technology, Pollachi",
@@ -38,4 +39,3 @@ export const profile = {
     "Pursues continuous self-directed learning through online coding platforms and technical communities."
   ]
 };
-

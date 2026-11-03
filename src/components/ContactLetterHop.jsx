@@ -88,7 +88,7 @@ export default function ContactLetterHop() {
                 onClick={handleBreakSeal}
                 className="w-20 h-20 rounded-full bg-gradient-to-tr from-amber-600 to-amber-400 text-white flex items-center justify-center shadow-md cursor-pointer hover:scale-110 active:scale-95 transition-all group relative"
               >
-                <span className="font-mono font-bold text-sm tracking-wider">KM</span>
+                <span className="font-mono font-bold text-sm tracking-wider">MK</span>
                 <span className="absolute -bottom-2 px-2 py-0.5 rounded-full bg-ink text-paper text-[8px] font-mono uppercase tracking-widest">
                   WAX SEAL
                 </span>
@@ -118,7 +118,7 @@ export default function ContactLetterHop() {
             >
               <div className="flex items-center justify-between pb-4 border-b border-line mb-6">
                 <span className="font-mono text-xs text-mute uppercase tracking-wider font-semibold">
-                  K. Muralidharan • Communications
+                  Muralidharan K • Communications
                 </span>
                 <span className="font-mono text-xs text-emerald-500 font-semibold flex items-center gap-1.5">
                   <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
