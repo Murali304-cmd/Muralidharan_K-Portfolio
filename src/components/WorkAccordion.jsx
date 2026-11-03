@@ -323,21 +323,17 @@ export default function WorkAccordion() {
                       </div>
 
                       <div className="flex items-center gap-3">
-                        {proj.githubUrl ? (
-                          <a
-                            href={proj.githubUrl}
-                            target="_blank"
-                            rel="noreferrer"
-                            className="px-5 py-2.5 rounded-full bg-ink text-paper text-xs font-mono font-medium flex items-center gap-1.5 hover:opacity-90 transition-opacity"
-                          >
-                            <span>View on GitHub</span>
-                            <ExternalLink className="w-3.5 h-3.5" />
-                          </a>
-                        ) : (
-                          <span className="text-[11px] font-mono text-mute bg-paper px-3 py-1.5 rounded-full border border-line">
-                            Repository Coming Soon
-                          </span>
-                        )}
+                        <a
+                          href={proj.githubUrl || 'https://github.com/Murali304-cmd'}
+                          target="_blank"
+                          rel="noreferrer"
+                          onClick={() => sound.playClick()}
+                          className="px-5 py-2.5 rounded-full bg-ink text-paper text-xs font-mono font-medium flex items-center gap-2 hover:bg-ink-2 hover:-translate-y-0.5 active:scale-95 transition-all shadow-md group"
+                        >
+                          <Github className="w-3.5 h-3.5 group-hover:rotate-12 transition-transform" />
+                          <span>View Repository</span>
+                          <ExternalLink className="w-3 h-3 opacity-70" />
+                        </a>
                       </div>
                     </div>
                   </div>
@@ -371,15 +367,27 @@ export default function WorkAccordion() {
             <div className="my-3 h-56">
               <LiveInteractiveSimulator type={proj.uiType} />
             </div>
-            <div className="flex flex-wrap gap-1 mt-2">
-              {proj.stack.map((t, i) => (
-                <span
-                  key={i}
-                  className="px-2 py-0.5 rounded bg-paper text-[10px] font-mono text-ink"
-                >
-                  {t}
-                </span>
-              ))}
+            <div className="flex flex-wrap items-center justify-between gap-2 mt-3 pt-3 border-t border-line">
+              <div className="flex flex-wrap gap-1">
+                {proj.stack.map((t, i) => (
+                  <span
+                    key={i}
+                    className="px-2 py-0.5 rounded bg-paper text-[10px] font-mono text-ink border border-line"
+                  >
+                    {t}
+                  </span>
+                ))}
+              </div>
+              <a
+                href={proj.githubUrl || 'https://github.com/Murali304-cmd'}
+                target="_blank"
+                rel="noreferrer"
+                onClick={() => sound.playClick()}
+                className="px-3.5 py-1.5 rounded-full bg-ink text-paper text-[11px] font-mono font-medium flex items-center gap-1.5 shadow-sm active:scale-95 transition-transform"
+              >
+                <Github className="w-3 h-3" />
+                <span>GitHub ↗</span>
+              </a>
             </div>
           </div>
         ))}

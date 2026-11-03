@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Sun, Moon, Volume2, VolumeX, ArrowUp } from 'lucide-react';
+import LoadingScreen from './components/LoadingScreen';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import AboutLanyard from './components/AboutLanyard';
@@ -17,6 +18,7 @@ import { sound } from './hooks/useSoundHaptics';
 
 export default function App() {
   const { mode, toggleMode, isCyber } = useThemeMode();
+  const [isLoading, setIsLoading] = useState(true);
   const [mousePos, setMousePos] = useState({ x: -100, y: -100 });
   const [soundEnabled, setSoundEnabled] = useState(true);
   const [showScrollTop, setShowScrollTop] = useState(false);
@@ -43,6 +45,7 @@ export default function App() {
     const next = sound.toggleSound();
     setSoundEnabled(next);
     if (next) sound.playClick();
+    window.dispatchEvent(new CustomEvent('portfolio-audio-toggle', { detail: { enabled: next } }));
   };
 
   const scrollToTop = () => {
@@ -52,6 +55,13 @@ export default function App() {
 
   return (
     <div className={`min-h-screen bg-paper text-ink font-sans antialiased selection:bg-ink selection:text-paper relative transition-colors duration-400 ${isCyber ? 'dark-cyber-grid' : ''}`}>
+      {/* Unique Awwwards-Level Cinematic Preloader */}
+      <AnimatePresence mode="wait">
+        {isLoading && (
+          <LoadingScreen onComplete={() => setIsLoading(false)} />
+        )}
+      </AnimatePresence>
+
       {/* Interactive Cursor Spotlight Glow Orb */}
       <div
         className="pointer-events-none fixed z-30 transition-opacity duration-300 -translate-x-1/2 -translate-y-1/2 rounded-full blur-3xl opacity-60 hidden md:block"
@@ -65,6 +75,24 @@ export default function App() {
             : 'radial-gradient(circle, rgba(13, 13, 13, 0.04) 0%, rgba(210, 180, 140, 0.06) 45%, transparent 70%)',
         }}
       />
+
+      {/* Dynamic Growing Ambient Background Halos (Awwwards Polish) */}
+      <div className="pointer-events-none fixed inset-0 overflow-hidden -z-10 select-none">
+        <div
+          className={`ambient-grow-1 absolute top-[12%] left-[6%] w-[520px] h-[520px] rounded-full blur-[110px] ${
+            isCyber
+              ? 'bg-gradient-to-tr from-cyan-600/25 via-emerald-500/15 to-transparent'
+              : 'bg-gradient-to-tr from-amber-400/15 via-rose-300/10 to-transparent'
+          }`}
+        />
+        <div
+          className={`ambient-grow-2 absolute bottom-[18%] right-[8%] w-[620px] h-[620px] rounded-full blur-[130px] ${
+            isCyber
+              ? 'bg-gradient-to-bl from-blue-600/20 via-teal-500/15 to-transparent'
+              : 'bg-gradient-to-bl from-orange-300/12 via-amber-200/15 to-transparent'
+          }`}
+        />
+      </div>
 
       {/* 1. Frosted Glass Top Navigation with Dual Mode Switcher */}
       <Navbar mode={mode} toggleMode={toggleMode} />

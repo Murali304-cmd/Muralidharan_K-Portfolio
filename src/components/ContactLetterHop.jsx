@@ -181,7 +181,7 @@ export default function ContactLetterHop() {
                 </div>
 
                 {/* Social Profiles */}
-                <div className="pt-4 border-t border-line flex items-center gap-4">
+                <div className="pt-4 border-t border-line flex flex-wrap items-center gap-4">
                   <span className="font-mono text-xs text-mute">Profiles:</span>
                   <a
                     href={profile.linkedin}
@@ -201,6 +201,26 @@ export default function ContactLetterHop() {
                     className="text-xs font-mono font-semibold text-ink hover:underline flex items-center gap-1"
                   >
                     <span>GitHub</span>
+                    <ArrowUpRight className="w-3.5 h-3.5" />
+                  </a>
+                  <a
+                    href={profile.hackerrank}
+                    target="_blank"
+                    rel="noreferrer"
+                    onClick={() => sound.playClick()}
+                    className="text-xs font-mono font-semibold text-emerald-600 dark:text-emerald-400 hover:underline flex items-center gap-1"
+                  >
+                    <span>HackerRank</span>
+                    <ArrowUpRight className="w-3.5 h-3.5" />
+                  </a>
+                  <a
+                    href={profile.leetcode}
+                    target="_blank"
+                    rel="noreferrer"
+                    onClick={() => sound.playClick()}
+                    className="text-xs font-mono font-semibold text-amber-600 dark:text-amber-400 hover:underline flex items-center gap-1"
+                  >
+                    <span>LeetCode</span>
                     <ArrowUpRight className="w-3.5 h-3.5" />
                   </a>
                 </div>

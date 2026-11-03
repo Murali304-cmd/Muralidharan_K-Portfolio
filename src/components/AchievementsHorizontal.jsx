@@ -39,7 +39,7 @@ function CountUp({ target, isDecimal = false, suffix = '' }) {
 const ACHIEVEMENTS_DATA = [
   {
     id: 'codevita',
-    index: '01 / 04',
+    index: '01 / 05',
     logo: '🏆',
     platform: 'TCS CodeVita Season 13',
     targetNum: 16434,
@@ -47,11 +47,12 @@ const ACHIEVEMENTS_DATA = [
     suffix: '',
     label: 'Global Rank',
     caption: 'International Algorithmic Coding Competition',
-    detail: 'Competed globally solving algorithmic optimization challenges.'
+    detail: 'Competed globally solving algorithmic optimization challenges.',
+    url: 'https://www.linkedin.com/in/muralidharan-k-041aa52b9'
   },
   {
     id: 'leetcode',
-    index: '02 / 04',
+    index: '02 / 05',
     logo: '💻',
     platform: 'LeetCode DSA Matrix',
     targetNum: 136,
@@ -59,11 +60,25 @@ const ACHIEVEMENTS_DATA = [
     suffix: '',
     label: 'Problems Solved',
     caption: '54 Easy • 72 Medium • 10 Hard',
-    detail: 'Arrays, Two Pointers, Trees, Graphs and Dynamic Programming.'
+    detail: 'Arrays, Two Pointers, Trees, Graphs and Dynamic Programming.',
+    url: 'https://leetcode.com/u/Murali_09/'
+  },
+  {
+    id: 'hackerrank',
+    index: '03 / 05',
+    logo: '⚡',
+    platform: 'HackerRank Verified',
+    targetNum: 5,
+    isDecimal: false,
+    suffix: '★',
+    label: 'Badge Mastery',
+    caption: 'Python & Problem Solving Badges',
+    detail: 'Verified algorithmic problem solving and database query certification.',
+    url: 'https://www.hackerrank.com/profile/muralidharanpra3'
   },
   {
     id: 'cgpa',
-    index: '03 / 04',
+    index: '04 / 05',
     logo: '🎓',
     platform: 'Dr. MCET Pollachi',
     targetNum: 8.3,
@@ -71,11 +86,12 @@ const ACHIEVEMENTS_DATA = [
     suffix: '',
     label: 'Current CGPA',
     caption: 'B.E. Information Technology',
-    detail: 'Academic distinction across core engineering curricula.'
+    detail: 'Academic distinction across core engineering curricula.',
+    url: 'https://drmcet.ac.in/'
   },
   {
     id: 'campuscrew',
-    index: '04 / 04',
+    index: '05 / 05',
     logo: '🎖️',
     platform: 'CampusCrew Milestone',
     targetNum: 100,
@@ -83,7 +99,8 @@ const ACHIEVEMENTS_DATA = [
     suffix: 'K',
     label: 'Milestone Honor',
     caption: 'Technical Community Engagement',
-    detail: 'Recognized for active participation and knowledge sharing.'
+    detail: 'Recognized for active participation and knowledge sharing.',
+    url: 'https://www.linkedin.com/in/muralidharan-k-041aa52b9'
   }
 ];
 
@@ -119,17 +136,24 @@ export default function AchievementsHorizontal() {
         {ACHIEVEMENTS_DATA.map((ach) => (
           <motion.div
             key={ach.id}
-            whileHover={{ y: -8 }}
-            className="w-[340px] sm:w-[420px] h-[280px] bg-card rounded-card p-7 border border-line shadow-soft-lg shrink-0 flex flex-col justify-between"
+            whileHover={{ y: -8, scale: 1.02 }}
+            onClick={() => {
+              sound.playClick();
+              if (ach.url) window.open(ach.url, '_blank');
+            }}
+            className="w-[340px] sm:w-[420px] h-[280px] bg-card rounded-card p-7 border border-line shadow-soft-lg shrink-0 flex flex-col justify-between cursor-pointer group hover:border-line-bold transition-all"
           >
             {/* Top Row: 72px Logo Tile + Index */}
             <div className="flex items-start justify-between">
-              <div className="w-[56px] h-[56px] rounded-2xl bg-paper flex items-center justify-center text-2xl shadow-inner border border-line">
+              <div className="w-[56px] h-[56px] rounded-2xl bg-paper flex items-center justify-center text-2xl shadow-inner border border-line group-hover:scale-105 transition-transform">
                 {ach.logo}
               </div>
-              <span className="font-mono text-xs text-mute font-bold">
-                {ach.index}
-              </span>
+              <div className="flex items-center gap-1.5">
+                <span className="font-mono text-xs text-mute font-bold">
+                  {ach.index}
+                </span>
+                <ExternalLink className="w-3.5 h-3.5 text-mute opacity-0 group-hover:opacity-100 transition-opacity" />
+              </div>
             </div>
 
             {/* Bottom Row: Details on Left, Big Count Number on Right */}

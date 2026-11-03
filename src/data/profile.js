@@ -19,6 +19,8 @@ export const profile = {
   linkedin: "https://linkedin.com/in/muralidharan-k-041aa52b9",
   leetcode: "https://leetcode.com/u/Murali_09/",
   leetcodeUsername: "Murali_09",
+  hackerrank: "https://www.hackerrank.com/profile/muralidharanpra3",
+  hackerrankUsername: "muralidharanpra3",
   bio: "Motivated Information Technology undergraduate passionate about Data Analytics, Machine Learning, and Software Development. Dedicated to building innovative, data-driven solutions with hands-on experience in predictive modeling, analytics dashboards, and AI.",
   storyIntro: "Every journey begins with curiosity. From Dharmapuri to Dr. MCET Pollachi, my passion for discovering patterns in numbers turned into a mission to engineer intelligent, data-driven systems.",
   objective: "Dedicated Information Technology student passionate about Data Analytics, Machine Learning, and Software Development. Skilled in Java, Python, SQL, Power BI, and data visualization, with hands-on experience through academic projects and a Data Analytics internship. Committed to delivering innovative, data-driven solutions while continuously enhancing technical and analytical skills.",

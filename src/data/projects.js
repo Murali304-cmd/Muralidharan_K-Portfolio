@@ -21,7 +21,7 @@ export const projects = [
     problem: 'Cloud-based document analyzers leak proprietary data and incur high API costs, while manual document searching across dense academic/business PDFs is tedious.',
     approach: 'Engineered an offline RAG pipeline parsing PDF text into overlapping semantic chunks, indexing chunk embeddings inside a FAISS vector store, and streaming answers generated through local Ollama LLMs orchestrated with FastAPI.',
     stack: ['Python', 'RAG', 'Ollama', 'FAISS', 'FastAPI'],
-    githubUrl: null, // "Repository Coming Soon"
+    githubUrl: 'https://github.com/Murali304-cmd/NILA-AI-Document-Assistant',
     demoUrl: null,
     uiType: 'rag-chat',
     metrics: [
@@ -43,7 +43,7 @@ export const projects = [
     problem: 'Intermittent renewable generation causes grid instability and expensive peak-hour grid consumption without dynamic energy scheduling.',
     approach: 'Constructed multi-stage predictive pipeline: forecasting solar generation and household load curves, evaluating battery State of Charge (SoC), and training a Reinforcement Learning agent to balance battery storage vs. grid purchase.',
     stack: ['Python', 'Machine Learning', 'Reinforcement Learning', 'IoT Architecture', 'NumPy'],
-    githubUrl: null,
+    githubUrl: 'https://github.com/Murali304-cmd/Smart-Energy-Management-System',
     demoUrl: null,
     uiType: 'energy-flow',
     metrics: [
@@ -65,7 +65,7 @@ export const projects = [
     problem: 'Retail managers lack visibility into customer lifetime value, churning risk segments, and purchase frequencies needed for personalized retention marketing.',
     approach: 'Cleaned raw transaction datasets, engineered RFM (Recency, Frequency, Monetary) metrics, formulated complex DAX calculated tables, and built drill-down Power BI visual reports.',
     stack: ['Power BI', 'DAX', 'Excel', 'Data Modeling'],
-    githubUrl: null,
+    githubUrl: 'https://github.com/Murali304-cmd/Customer-Segmentation-PowerBI',
     demoUrl: null,
     uiType: 'powerbi-dashboard',
     metrics: [
@@ -87,7 +87,7 @@ export const projects = [
     problem: 'ATM replenishment carries hefty transit insurance fees and stockout penalties when demand surges on weekends or paydays.',
     approach: 'Performed extensive data cleansing with Pandas and NumPy, extracted calendar indicators (holidays, week numbers), trained regression models, and visualised forecast residuals using Plotly and Streamlit.',
     stack: ['Python', 'Scikit-learn', 'Pandas', 'NumPy', 'Plotly', 'Streamlit'],
-    githubUrl: null,
+    githubUrl: 'https://github.com/Murali304-cmd/ATM-Cash-Demand-Prediction',
     demoUrl: null,
     uiType: 'cash-chart',
     metrics: [
@@ -109,7 +109,7 @@ export const projects = [
     problem: 'Unorganized datasets scattered across storage drives lead to version drift, broken model reproducibility, and duplicate preprocessing efforts.',
     approach: 'Designed normalized relational database schemas with robust CRUD operations, validation layers, and an accessible frontend for data scientists to search and register dataset splits.',
     stack: ['Python', 'SQL', 'Database Connectivity', 'CRUD Architecture'],
-    githubUrl: null,
+    githubUrl: 'https://github.com/Murali304-cmd/Dataset-Management-System',
     demoUrl: null,
     uiType: 'dataset-crud',
     metrics: [
@@ -131,7 +131,7 @@ export const projects = [
     problem: 'Real estate valuations are vulnerable to subjective biases and volatile market trends when evaluated without historical multivariable data.',
     approach: 'Handled missing values, engineered polynomial and interaction features, tested multiple linear and ensemble regressors, and evaluated mean squared error curves.',
     stack: ['Python', 'Scikit-learn', 'Pandas', 'Matplotlib'],
-    githubUrl: null,
+    githubUrl: 'https://github.com/Murali304-cmd/House-Price-Prediction',
     demoUrl: null,
     uiType: 'price-prediction',
     metrics: [

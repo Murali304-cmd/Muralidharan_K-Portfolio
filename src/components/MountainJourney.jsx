@@ -1,7 +1,6 @@
-
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Flag, CheckCircle2, Compass, Mountain, ArrowUpRight, Sparkles, Sliders } from 'lucide-react';
+import { Flag, CheckCircle2, Mountain, Sparkles, Sliders, ArrowUpRight } from 'lucide-react';
 import { sound } from '../hooks/useSoundHaptics';
 
 const MOUNTAIN_CAMPS = [
@@ -87,9 +86,19 @@ const MOUNTAIN_CAMPS = [
   }
 ];
 
+// Exact physical coordinates along the mountain contour (progressing from basecamp to peak)
+const CAMP_COORDINATES = [
+  { left: 10, bottom: 12 }, // Basecamp: 320m
+  { left: 28, bottom: 28 }, // Camp 1: 780m
+  { left: 48, bottom: 48 }, // Camp 2: 1240m
+  { left: 68, bottom: 66 }, // Camp 3: 1680m
+  { left: 88, bottom: 84 }, // Summit: 2150m
+];
+
 export default function MountainJourney() {
   const [activeCampIndex, setActiveCampIndex] = useState(1);
   const activeCamp = MOUNTAIN_CAMPS[activeCampIndex];
+  const activeCoord = CAMP_COORDINATES[activeCampIndex];
 
   const handleSelectCamp = (idx) => {
     sound.playClick();
@@ -132,75 +141,83 @@ export default function MountainJourney() {
           </div>
 
           {/* Mountain Contour Background SVG */}
-          <div className="relative h-64 sm:h-72 w-full flex items-end justify-center">
+          <div className="relative h-64 sm:h-76 w-full flex items-end justify-center select-none overflow-hidden">
             <svg
-              className="absolute inset-0 w-full h-full text-slate-200 dark:text-slate-800"
+              className="absolute inset-0 w-full h-full text-slate-200 dark:text-slate-800 pointer-events-none"
               viewBox="0 0 500 280"
               preserveAspectRatio="none"
               fill="none"
             >
+              {/* Layer 1: Distant background peaks */}
               <path
-                d="M0 280 L90 140 L190 200 L320 60 L420 160 L500 280 Z"
+                d="M 0 280 L 100 170 L 200 230 L 320 120 L 440 50 L 500 280 Z"
                 fill="currentColor"
+                opacity="0.35"
               />
+              {/* Layer 2: Main alpine ridge rising from basecamp to summit */}
               <path
-                d="M60 280 L180 110 L280 180 L390 40 L500 190 L500 280 Z"
-                fill="rgba(244, 242, 238, 0.7)"
-                className="dark:fill-slate-900/60"
+                d="M 0 280 L 50 246 L 140 202 L 240 146 L 340 95 L 440 42 L 500 110 L 500 280 Z"
+                fill="currentColor"
+                opacity="0.8"
               />
-              {/* Steep Trail dashed path */}
+              {/* Layer 3: Dashed glowing trail connecting the camps */}
               <path
-                d="M40 250 Q 140 210, 200 160 T 360 90 T 440 40"
+                d="M 50 246 Q 140 202, 240 146 T 340 95 T 440 42"
                 stroke="currentColor"
-                strokeWidth="2.5"
+                strokeWidth="3"
                 strokeDasharray="6 6"
-                className="text-ink"
+                className="text-emerald-500 dark:text-cyan-400"
                 fill="none"
               />
             </svg>
 
             {/* Checkpoint Flags along the Trail */}
             {MOUNTAIN_CAMPS.map((camp, idx) => {
-              const xPos = 12 + idx * 19;
-              const yPos = 82 - idx * 18;
+              const coord = CAMP_COORDINATES[idx];
               const isActive = idx === activeCampIndex;
+              const isPassed = idx <= activeCampIndex;
+              const isSummit = idx === MOUNTAIN_CAMPS.length - 1;
 
               return (
                 <div
                   key={camp.id}
-                  style={{ left: `${xPos}%`, bottom: `${yPos}%` }}
+                  style={{ left: `${coord.left}%`, bottom: `${coord.bottom}%` }}
                   onClick={() => handleSelectCamp(idx)}
                   className="absolute cursor-pointer -translate-x-1/2 translate-y-1/2 group z-20"
                 >
                   <div
-                    className={`w-8 h-8 rounded-full flex items-center justify-center font-mono text-xs font-bold transition-all ${
+                    className={`w-8 h-8 rounded-full flex items-center justify-center font-mono text-xs font-bold transition-all shadow-md ${
                       isActive
-                        ? 'bg-ink text-paper scale-125 shadow-md ring-4 ring-slate-300 dark:ring-slate-700'
-                        : 'bg-card border-2 border-slate-300 dark:border-slate-700 text-ink hover:scale-110'
+                        ? 'bg-ink text-paper scale-125 ring-4 ring-emerald-500/30 dark:ring-cyan-500/30'
+                        : isPassed
+                        ? 'bg-emerald-600 text-white hover:scale-110'
+                        : 'bg-card border-2 border-line text-ink hover:scale-110'
                     }`}
                   >
-                    {idx + 1}
+                    {isSummit ? '🚩' : idx + 1}
                   </div>
 
                   {/* Tooltip on hover */}
-                  <div className="absolute bottom-9 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity bg-ink text-paper text-[10px] font-mono px-2 py-1 rounded whitespace-nowrap pointer-events-none shadow-sm">
+                  <div className="absolute bottom-9 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity bg-ink text-paper text-[10px] font-mono px-2 py-1 rounded whitespace-nowrap pointer-events-none shadow-md z-30">
                     {camp.altitude} • {camp.id}
                   </div>
                 </div>
               );
             })}
 
-            {/* Animated Trekker Avatar on Active Camp */}
+            {/* Animated Climber Avatar physically hiking on the ridge */}
             <motion.div
               animate={{
-                left: `${12 + activeCampIndex * 19}%`,
-                bottom: `${82 - activeCampIndex * 18}%`,
+                left: `${activeCoord.left}%`,
+                bottom: `${activeCoord.bottom}%`,
               }}
-              transition={{ type: 'spring', damping: 20, stiffness: 220 }}
-              className="absolute -translate-x-1/2 translate-y-2 pointer-events-none z-30 flex flex-col items-center"
+              transition={{ type: 'spring', damping: 22, stiffness: 220 }}
+              className="absolute -translate-x-1/2 -translate-y-6 pointer-events-none z-30 flex flex-col items-center"
             >
-              <div className="text-2xl animate-bounce">🧗‍♂️</div>
-              <span className="text-[9px] font-mono font-bold bg-ink text-paper px-1.5 py-0.2 rounded-full shadow-xs">
+              <div className="text-2xl animate-bounce">
+                {activeCampIndex === MOUNTAIN_CAMPS.length - 1 ? '🏆' : '🧗‍♂️'}
+              </div>
+              <span className="text-[9px] font-mono font-bold bg-ink text-paper px-2 py-0.5 rounded-full shadow-md whitespace-nowrap">
                 {activeCamp.altitude}
               </span>
             </motion.div>
@@ -209,7 +226,7 @@ export default function MountainJourney() {
           {/* Stepper & Slider Controls */}
           <div className="mt-6 pt-4 border-t border-line space-y-3">
             <div className="flex items-center justify-between text-xs font-mono text-mute">
-              <span>Drag Ascent Elevation:</span>
+              <span>Ascent Progress:</span>
               <span className="font-bold text-ink">{activeCamp.altitude}</span>
             </div>
 
@@ -227,16 +244,17 @@ export default function MountainJourney() {
               <button
                 disabled={activeCampIndex === 0}
                 onClick={() => handleSelectCamp(activeCampIndex - 1)}
-                className="px-3 py-1.5 rounded-lg border border-line disabled:opacity-30 hover:bg-paper text-ink transition-colors"
+                className="px-3.5 py-1.5 rounded-xl border border-line disabled:opacity-30 hover:bg-paper text-ink transition-all active:scale-95"
               >
                 ← Lower Camp
               </button>
               <button
                 disabled={activeCampIndex === MOUNTAIN_CAMPS.length - 1}
                 onClick={() => handleSelectCamp(activeCampIndex + 1)}
-                className="px-3 py-1.5 rounded-lg border border-line disabled:opacity-30 hover:bg-paper text-ink transition-colors font-bold"
+                className="px-3.5 py-1.5 rounded-xl border border-line disabled:opacity-30 hover:bg-paper text-ink transition-all font-bold active:scale-95 flex items-center gap-1"
               >
-                Higher Summit →
+                <span>Higher Summit</span>
+                <span className="text-emerald-500 font-bold">↑</span>
               </button>
             </div>
           </div>
@@ -285,7 +303,7 @@ export default function MountainJourney() {
                     key={i}
                     className="flex items-start gap-3 p-3 rounded-xl bg-paper/60 border border-line text-xs text-ink leading-relaxed"
                   >
-                    <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
+                    <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400 shrink-0 mt-0.5" />
                     <span>{task}</span>
                   </div>
                 ))}

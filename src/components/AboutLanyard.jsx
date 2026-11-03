@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { motion } from 'framer-motion';
-import { Download, ExternalLink, Github, Linkedin, Sparkles } from 'lucide-react';
+import { Download, ExternalLink, Github, Linkedin, Sparkles, Code2 } from 'lucide-react';
 import { profile } from '../data/profile';
 import { sound } from '../hooks/useSoundHaptics';
 
@@ -90,6 +90,17 @@ export default function AboutLanyard() {
             >
               <Linkedin className="w-3.5 h-3.5" />
               <span>LinkedIn ↗</span>
+            </a>
+
+            <a
+              href={profile.hackerrank}
+              target="_blank"
+              rel="noreferrer"
+              onClick={() => sound.playClick()}
+              className="px-5 py-2.5 rounded-full border border-line-bold text-ink text-xs font-mono font-medium hover:bg-card transition-all flex items-center gap-1.5"
+            >
+              <Code2 className="w-3.5 h-3.5 text-emerald-500" />
+              <span>HackerRank ↗</span>
             </a>
           </div>
         </div>

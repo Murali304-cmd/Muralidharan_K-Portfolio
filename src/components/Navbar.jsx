@@ -52,6 +52,7 @@ export default function Navbar({ mode, toggleMode }) {
     const next = sound.toggleSound();
     setSoundEnabled(next);
     if (next) sound.playClick();
+    window.dispatchEvent(new CustomEvent('portfolio-audio-toggle', { detail: { enabled: next } }));
   };
 
   return (
