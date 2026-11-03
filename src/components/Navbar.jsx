@@ -66,7 +66,7 @@ export default function Navbar({ mode, toggleMode }) {
 
       <header
         className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${
-          scrolled ? 'py-3' : 'py-6'
+          scrolled ? 'py-2' : 'py-3.5'
         }`}
       >
         <div className="max-w-[1320px] mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">

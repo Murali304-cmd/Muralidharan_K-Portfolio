@@ -168,6 +168,12 @@
 }
 
 /* Print & PDF Safeguard: Clean high-contrast output */
+video::-webkit-media-controls,
+video::-webkit-media-controls-enclosure,
+video::-webkit-media-controls-panel {
+  display: none !important;
+}
+
 @media print {
   body {
     background-color: #ffffff !important;

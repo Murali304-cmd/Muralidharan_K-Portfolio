@@ -1,11 +1,10 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Volume2, VolumeX, Sparkles, Terminal, Cpu, Database, BarChart2 } from 'lucide-react';
+import { Sparkles, Terminal, Cpu, Database, BarChart2 } from 'lucide-react';
 import { profile } from '../data/profile';
 import { sound } from '../hooks/useSoundHaptics';
 
 export default function Hero() {
-  const [isVoiceActive, setIsVoiceActive] = useState(false);
   const [rotateX, setRotateX] = useState(0);
   const [rotateY, setRotateY] = useState(0);
   const videoRef = useRef(null);
@@ -15,50 +14,47 @@ export default function Hero() {
     const video = videoRef.current;
     if (!video) return;
 
-    // 1. Attempt unmuted playback immediately
-    video.muted = false;
-    video.volume = 1.0;
+    video.loop = true;
+    video.playsInline = true;
+
+    // 1. Immediately start playing video so the avatar is actively moving & speaking
+    video.muted = true;
     const playPromise = video.play();
 
     if (playPromise !== undefined) {
       playPromise
         .then(() => {
-          setIsVoiceActive(true);
+          // Video is playing! Now attempt to unmute voice
+          video.muted = false;
+          video.volume = 1.0;
         })
         .catch(() => {
-          // If browser restricts unmuted autoplay, play muted first
+          // Fallback if browser requires user gesture
           video.muted = true;
           video.play().catch(() => {});
-          setIsVoiceActive(false);
-
-          // 2. Unmute on ANY user interaction anywhere on the page
-          const unmuteOnInteraction = () => {
-            if (videoRef.current) {
-              videoRef.current.muted = false;
-              videoRef.current.volume = 1.0;
-              videoRef.current.play().catch(() => {});
-              setIsVoiceActive(true);
-            }
-            ['pointerdown', 'click', 'scroll', 'touchstart', 'mousemove', 'keydown'].forEach((evt) => {
-              window.removeEventListener(evt, unmuteOnInteraction);
-            });
-          };
-
-          ['pointerdown', 'click', 'scroll', 'touchstart', 'mousemove', 'keydown'].forEach((evt) => {
-            window.addEventListener(evt, unmuteOnInteraction, { once: true, passive: true });
-          });
         });
     }
 
-    // Video keeps looping continuously and voice remains always on
-    const handleEnded = () => {
-      video.currentTime = 0;
-      video.play().catch(() => {});
+    // 2. Unmute on ANY gesture (mousemove, scroll, touch, click, keydown)
+    const unmuteAll = () => {
+      if (videoRef.current) {
+        videoRef.current.muted = false;
+        videoRef.current.volume = 1.0;
+        videoRef.current.play().catch(() => {});
+      }
+      ['pointerdown', 'click', 'scroll', 'touchstart', 'mousemove', 'keydown'].forEach((evt) => {
+        window.removeEventListener(evt, unmuteAll);
+      });
     };
 
-    video.addEventListener('ended', handleEnded);
+    ['pointerdown', 'click', 'scroll', 'touchstart', 'mousemove', 'keydown'].forEach((evt) => {
+      window.addEventListener(evt, unmuteAll, { once: true, passive: true });
+    });
+
     return () => {
-      video.removeEventListener('ended', handleEnded);
+      ['pointerdown', 'click', 'scroll', 'touchstart', 'mousemove', 'keydown'].forEach((evt) => {
+        window.removeEventListener(evt, unmuteAll);
+      });
     };
   }, []);
 
@@ -68,13 +64,21 @@ export default function Hero() {
     const rect = videoContainerRef.current.getBoundingClientRect();
     const x = e.clientX - rect.left - rect.width / 2;
     const y = e.clientY - rect.top - rect.height / 2;
-    setRotateX((-y / (rect.height / 2)) * 6);
-    setRotateY((x / (rect.width / 2)) * 6);
+    setRotateX((-y / (rect.height / 2)) * 5);
+    setRotateY((x / (rect.width / 2)) * 5);
   };
 
   const handleMouseLeave = () => {
     setRotateX(0);
     setRotateY(0);
+  };
+
+  const handleVideoClick = () => {
+    if (videoRef.current) {
+      videoRef.current.muted = false;
+      videoRef.current.volume = 1.0;
+      videoRef.current.play().catch(() => {});
+    }
   };
 
   const scrollTo = (id) => {
@@ -86,7 +90,7 @@ export default function Hero() {
   return (
     <section
       id="hero"
-      className="relative min-h-[96svh] flex flex-col items-center justify-between pt-28 pb-12 px-4 sm:px-6 lg:px-8 overflow-hidden"
+      className="relative min-h-[92svh] sm:min-h-[94svh] flex flex-col items-center justify-center pt-20 sm:pt-24 pb-8 px-4 sm:px-6 lg:px-8 overflow-hidden"
     >
       {/* Giant Outlined Ghost Word "MURALI" behind the person */}
       <div
@@ -101,34 +105,35 @@ export default function Hero() {
         </span>
       </div>
 
-      {/* Main Heading with Staggered Fade Up */}
+      {/* Main Heading */}
       <motion.div
-        initial={{ opacity: 0, y: 20 }}
+        initial={{ opacity: 0, y: 15 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-        className="relative z-10 text-center max-w-3xl mx-auto mb-2"
+        transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+        className="relative z-10 text-center max-w-3xl mx-auto mb-3"
       >
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-card border border-line text-xs font-mono text-mute mb-4 shadow-sm">
+        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-card border border-line text-xs font-mono text-mute mb-2 shadow-sm">
           <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
           <span>Available for High-Impact Roles</span>
         </div>
-        <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tightest leading-tight text-ink">
+        <h1 className="text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tightest leading-tight text-ink">
           Data Analyst & <span className="font-serif-italic text-mute">Machine Learning</span> Developer.
         </h1>
       </motion.div>
 
-      {/* UNMODIFIED FULL 16:9 LANDSCAPE VIDEO (Always On Voice, 3D Gyro Tilt, Floating Tech Badges) */}
+      {/* UNMODIFIED FULL 16:9 LANDSCAPE VIDEO (Continuously Speaking, Zero Overlay Buttons, 3D Gyro Tilt) */}
       <div
         ref={videoContainerRef}
         onMouseMove={handleMouseMove}
         onMouseLeave={handleMouseLeave}
-        className="relative z-10 w-full max-w-4xl my-4 perspective-1000 flex items-center justify-center"
+        onClick={handleVideoClick}
+        className="relative z-10 w-full max-w-3xl lg:max-w-4xl my-2 sm:my-3 perspective-1000 flex items-center justify-center cursor-pointer"
       >
         {/* Floating Interactive Orbit Badge 1 (Top Left) */}
         <motion.div
-          animate={{ y: [-8, 8, -8], rotate: [-1, 2, -1] }}
+          animate={{ y: [-6, 6, -6], rotate: [-1, 2, -1] }}
           transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
-          className="hidden md:flex absolute -top-4 -left-6 z-20 items-center gap-2 px-3.5 py-1.5 rounded-full bg-card/90 backdrop-blur-md border border-line shadow-soft-lg text-xs font-mono text-ink pointer-events-none"
+          className="hidden md:flex absolute -top-3 -left-6 z-20 items-center gap-2 px-3.5 py-1.5 rounded-full bg-card/90 backdrop-blur-md border border-line shadow-soft-lg text-xs font-mono text-ink pointer-events-none"
         >
           <Database className="w-3.5 h-3.5 text-blue-500" />
           <span>Python • SQL • Pandas</span>
@@ -136,9 +141,9 @@ export default function Hero() {
 
         {/* Floating Interactive Orbit Badge 2 (Top Right) */}
         <motion.div
-          animate={{ y: [8, -8, 8], rotate: [2, -1, 2] }}
+          animate={{ y: [6, -6, 6], rotate: [2, -1, 2] }}
           transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut', delay: 0.5 }}
-          className="hidden md:flex absolute -top-4 -right-6 z-20 items-center gap-2 px-3.5 py-1.5 rounded-full bg-card/90 backdrop-blur-md border border-line shadow-soft-lg text-xs font-mono text-ink pointer-events-none"
+          className="hidden md:flex absolute -top-3 -right-6 z-20 items-center gap-2 px-3.5 py-1.5 rounded-full bg-card/90 backdrop-blur-md border border-line shadow-soft-lg text-xs font-mono text-ink pointer-events-none"
         >
           <BarChart2 className="w-3.5 h-3.5 text-amber-500" />
           <span>Power BI • Tableau • DAX</span>
@@ -146,9 +151,9 @@ export default function Hero() {
 
         {/* Floating Interactive Orbit Badge 3 (Bottom Left) */}
         <motion.div
-          animate={{ y: [6, -6, 6], rotate: [-2, 1, -2] }}
+          animate={{ y: [5, -5, 5], rotate: [-2, 1, -2] }}
           transition={{ duration: 5.5, repeat: Infinity, ease: 'easeInOut', delay: 1 }}
-          className="hidden md:flex absolute -bottom-4 -left-4 z-20 items-center gap-2 px-3.5 py-1.5 rounded-full bg-card/90 backdrop-blur-md border border-line shadow-soft-lg text-xs font-mono text-ink pointer-events-none"
+          className="hidden md:flex absolute -bottom-3 -left-4 z-20 items-center gap-2 px-3.5 py-1.5 rounded-full bg-card/90 backdrop-blur-md border border-line shadow-soft-lg text-xs font-mono text-ink pointer-events-none"
         >
           <Cpu className="w-3.5 h-3.5 text-cyan-500" />
           <span>RAG • Ollama • FAISS</span>
@@ -156,15 +161,15 @@ export default function Hero() {
 
         {/* Floating Interactive Orbit Badge 4 (Bottom Right) */}
         <motion.div
-          animate={{ y: [-6, 6, -6], rotate: [1, -2, 1] }}
+          animate={{ y: [-5, 5, -5], rotate: [1, -2, 1] }}
           transition={{ duration: 6.5, repeat: Infinity, ease: 'easeInOut', delay: 1.5 }}
-          className="hidden md:flex absolute -bottom-4 -right-4 z-20 items-center gap-2 px-3.5 py-1.5 rounded-full bg-card/90 backdrop-blur-md border border-line shadow-soft-lg text-xs font-mono text-ink pointer-events-none"
+          className="hidden md:flex absolute -bottom-3 -right-4 z-20 items-center gap-2 px-3.5 py-1.5 rounded-full bg-card/90 backdrop-blur-md border border-line shadow-soft-lg text-xs font-mono text-ink pointer-events-none"
         >
           <Terminal className="w-3.5 h-3.5 text-emerald-500" />
           <span>Machine Learning Systems</span>
         </motion.div>
 
-        {/* Main 16:9 Video Canvas Frame */}
+        {/* Main 16:9 Video Canvas Frame (Clean, unblocked speaking avatar) */}
         <motion.div
           animate={{ rotateX, rotateY }}
           transition={{ type: 'spring', damping: 20, stiffness: 200 }}
@@ -173,29 +178,13 @@ export default function Hero() {
           <video
             ref={videoRef}
             src="/hero-video.mp4"
-            poster="/murali-portrait.jpg"
             autoPlay
             loop
+            muted
             playsInline
             preload="auto"
             className="w-full h-full object-contain mix-blend-multiply dark:mix-blend-normal"
           />
-
-          {/* Voice Active Live EQ Visualizer (Always on voice indicator) */}
-          <div className="absolute bottom-4 right-4 z-20">
-            <div className="flex items-center gap-2.5 px-3.5 py-2 rounded-full bg-ink/90 text-paper text-[10px] font-mono font-bold shadow-lg backdrop-blur-md border border-white/10 select-none">
-              <span className={`w-2 h-2 rounded-full ${isVoiceActive ? 'bg-emerald-400 animate-pulse' : 'bg-amber-400'}`} />
-              <span>{isVoiceActive ? 'VOICE ON' : 'AUDIO READY'}</span>
-              
-              {/* Animated Equalizer Waves */}
-              <div className="flex items-end gap-[3px] h-3.5">
-                <span className={`w-[2px] bg-paper rounded-full transition-all ${isVoiceActive ? 'h-3 animate-[pulse_0.6s_infinite]' : 'h-1'}`} />
-                <span className={`w-[2px] bg-paper rounded-full transition-all ${isVoiceActive ? 'h-2 animate-[pulse_0.9s_infinite]' : 'h-1.5'}`} />
-                <span className={`w-[2px] bg-paper rounded-full transition-all ${isVoiceActive ? 'h-3.5 animate-[pulse_0.5s_infinite]' : 'h-1'}`} />
-                <span className={`w-[2px] bg-paper rounded-full transition-all ${isVoiceActive ? 'h-2 animate-[pulse_0.8s_infinite]' : 'h-1.5'}`} />
-              </div>
-            </div>
-          </div>
         </motion.div>
       </div>
 
@@ -203,7 +192,7 @@ export default function Hero() {
       <motion.div
         initial={{ opacity: 0, y: 15 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, delay: 0.2 }}
+        transition={{ duration: 0.5, delay: 0.15 }}
         className="relative z-10 flex flex-wrap items-center justify-center gap-3 pt-2"
       >
         <button
@@ -235,8 +224,8 @@ export default function Hero() {
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ duration: 0.6, delay: 0.3 }}
-        className="relative z-10 mt-6 flex items-center justify-center"
+        transition={{ duration: 0.5, delay: 0.25 }}
+        className="relative z-10 mt-4 flex items-center justify-center"
       >
         <div className="inline-flex flex-wrap items-center justify-center gap-2 sm:gap-4 px-4 py-1.5 rounded-full bg-card/80 border border-line backdrop-blur-sm text-[11px] font-mono text-mute shadow-soft">
           <span className="text-ink font-bold">8.3 CGPA</span>
