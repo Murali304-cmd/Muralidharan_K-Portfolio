@@ -164,6 +164,19 @@ export default function Hero() {
           <span className="text-sm leading-none">↓</span>
         </a>
       </div>
+
+      {/* Point 29: Verified Quick Metrics Pill */}
+      <div className="relative z-10 mt-6 flex items-center justify-center">
+        <div className="inline-flex flex-wrap items-center justify-center gap-2 sm:gap-4 px-4 py-1.5 rounded-full bg-card/80 border border-line backdrop-blur-sm text-[11px] font-mono text-mute shadow-soft">
+          <span className="text-ink font-bold">8.3 CGPA</span>
+          <span className="text-faint">•</span>
+          <span>TCS CodeVita <strong className="text-ink">#16,434</strong></span>
+          <span className="text-faint">•</span>
+          <span><strong className="text-ink">136</strong> LeetCode</span>
+          <span className="text-faint">•</span>
+          <span className="hidden sm:inline">Dr. MCET IT '28</span>
+        </div>
+      </div>
     </section>
   );
 }
